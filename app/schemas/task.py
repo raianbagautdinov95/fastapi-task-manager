@@ -1,10 +1,12 @@
 from pydantic import BaseModel, ConfigDict
 
+from app.models.enums import TaskStatus
+
 
 class TaskBase(BaseModel):
     title: str
     description: str | None = None
-    status: str = "todo"
+    status: TaskStatus = TaskStatus.todo
 
 
 class TaskCreate(TaskBase):
@@ -15,7 +17,7 @@ class TaskCreate(TaskBase):
 class TaskUpdate(BaseModel):
     title: str | None = None
     description: str | None = None
-    status: str | None = None
+    status: TaskStatus | None = None
     assignee_id: int | None = None
 
 

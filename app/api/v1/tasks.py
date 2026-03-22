@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
+from app.models.enums import TaskStatus
 
 from app.crud.project import crud_project
 from app.crud.task import crud_task
@@ -42,7 +43,7 @@ async def create_task(
 @router.get("/", response_model=list[TaskRead])
 async def get_tasks(
     project_id: int = Query(...),
-    status_filter: str | None = Query(None, alias="status"),
+    status_filter: TaskStatus | None = Query(None, alias="status"),
     assignee_id: int | None = Query(None),
     creator_id: int | None = Query(None),
     session: AsyncSession = Depends(get_session),

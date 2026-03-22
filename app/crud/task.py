@@ -1,6 +1,6 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-
+from app.models.enums import TaskStatus
 from app.models.task import Task
 from app.schemas.task import TaskCreate, TaskUpdate
 
@@ -36,12 +36,12 @@ class TaskCRUD:
         return result.scalar_one_or_none()
 
     async def get_filtered(
-        self,
-        session: AsyncSession,
-        project_id: int,
-        status: str | None = None,
-        assignee_id: int | None = None,
-        creator_id: int | None = None,
+            self,
+            session: AsyncSession,
+            project_id: int,
+            status: TaskStatus | None = None,
+            assignee_id: int | None = None,
+            creator_id: int | None = None,
     ) -> list[Task]:
         query = select(Task).where(Task.project_id == project_id)
 
